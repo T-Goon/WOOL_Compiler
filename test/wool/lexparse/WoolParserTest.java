@@ -24,6 +24,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.*;
 import wool.testutil.WoolTestRunner;
 import wool.utility.WoolRunnerImpl;
+import org.junit.jupiter.api.function.Executable;
 
 /**
  * Description
@@ -44,11 +45,40 @@ class WoolParserTest extends WoolTestRunner
     
     @ParameterizedTest
     @ValueSource( strings = {
-        "emptyClass.wl"
+        "emptyClass.wl",
+        "classWithVariables.wl",
+        "multipleClasses.wl", // program parser rule good
+        "inheritance.wl", // class parser rule is good
+        "vardefTests.wl", // vardef parser rule is good
+        "methodTests.wl", // method parser rule good
+        "formalsTest.wl", // formals parser rule good
+        "exprTest1.wl", // expr parser rule good up to select
+        "exprTest2.wl", // expr parser rule good up to - expr rule
+        "exprTest3.wl", // expr parser rule good up to ~ expr rule
+        "exprTest4.wl", // expr parser rule is good
+        "commentsTest.wl", // Comments are all set
+        "stringTest.wl"
     })
     void useTestFiles(String f) throws IOException
     {
         doParse(CharStreams.fromFileName("test-files/" + f));
         assertNotNull(tree);
+    }
+    
+//    @ParameterizedTest
+    @ValueSource( strings = {
+            "empty.wl",
+            "randomText.wl",
+            "tooManyInherts.wl",
+            "vardefBad.wl",
+            "vardefBad2.wl",
+            "vardefBad3.wl",
+            "vardefBad4.wl"})
+    void negTests(String f) {
+    	Executable e = () ->{
+    		doParse(CharStreams.fromFileName("test-files/negTestFiles/" + f));
+    	};
+    	
+    	assertThrows(Exception.class, e);
     }
 }

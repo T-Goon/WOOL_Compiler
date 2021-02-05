@@ -4,16 +4,56 @@
  */
 grammar Wool;
 
-@header {
-package wool.lexparse;
+@header{
+	package wool.lexparse;
 }
-
+ 
 // Parser rules
-program                 :   .*? EOF;       // Non-greedy just to not have a warning
+program                 :   cls+ EOF;       // Non-greedy just to not have a warning
               									// See (ANTLR) Sec. 15.6
-//cls : CLASS WS [' inherits ' TYPE]? '{' [vardef|method]* '}';
+cls : CLASS TYPE inhrt? OC (vardef | method)* CC;
+inhrt : INHERITS TYPE;
+vardef: ID TS TYPE assign? EL;
+assign : ASSIGN expr;
+method : ID LP ((formal PS)* formal)* RP TS TYPE OC vardef* expr CC;
+formal : ID TS TYPE;
+expr : ID assign 
+	| expr DOT ID LP params? RP
+	| ID LP params? RP
+	| IF expr THEN expr ELSE expr FI
+	| WHILE expr LOOP expr POOL
+	| OC (expr EL)+ CC
+	| SELECT (expr TS expr EL)+ END
+	| NEW TYPE
+	| ISNULL expr 
+	| expr PLUS expr
+	| expr MINUS expr
+	| expr TIMES expr
+	| expr DIV expr
+	| MINUS expr
+	| expr LT expr
+	| expr LTE expr
+	| expr EQ expr
+	| expr AE expr
+	| expr GTE expr
+	| expr GT expr
+	| NEG expr
+	| LP expr RP
+	| ID 
+	| NUM
+	| STRING
+	| TRUE
+	| FALSE 
+	| NULL;
+	
+params : (expr (PS expr)*);
 //need to put "this" somewhere
 // Should the lexer ignore comments?
+
+WS : [\r\n \t] -> skip;
+LINECOMMENT : '#'.*? '\r'? ('\n'|EOF)  -> skip;
+BLOCKCOMMENT : '(*' SUBCOMMENT*? '*)' -> skip;
+fragment SUBCOMMENT : BLOCKCOMMENT | .;
 
 BOOL : 'boolean';
 CLASS : 'class';
@@ -23,7 +63,6 @@ FALSE : 'false';
 FI : 'fi';
 IF : 'if';
 IN : 'in';
-INT : 'int';
 INHERITS : 'inherits';
 ISNULL : 'isnull';
 LOOP : 'loop';
@@ -34,18 +73,31 @@ SELECT : 'select';
 THEN : 'then';
 TRUE : 'true';
 WHILE : 'while';
+ASSIGN :'<-';
+PLUS : '+';
+MINUS : '-';
+TIMES : '*';
+DIV : '/';
+LT : '<';
+LTE : '<=';
+EQ : '=';
+AE : '~=';
+GTE : '>=';
+GT : '>';
+LP : '(';
+RP : ')';
+DOT : '.';
+OC : '{';
+CC : '}';
+TS : ':';
+EL : ';';
+PS : ',';
+NEG : '~';
 
-ID : [a-z][a-zA-Z0-9_]*;
-TYPE : [A-Z][a-zA-Z0-9_]*;
+TYPE : ([A-Z][a-zA-Z0-9_]* | 'int');
+ID : ([a-z][a-zA-Z0-9_]* | 'this');
 NUM : [0-9]+;
 
-THIS : 'this';
-
-WS : [\r\n] -> skip;
-COMMENT1 : '#'.*[\n|EOF] -> skip;
-COMMENT2 : '(*' .* '*)' SPACE* -> skip;
-STRING : '"' ([a-zA-Z0-9 .,`~()$_={};:*&^%!#/'] | ESCP| SQRBRKTS)* '"';
-fragment ESCP : '\\\\'|'\\r'| '\\t'| '\\b'| '\\f'| '\\\''| '\\"'| '\\\\n';
-fragment SQRBRKTS : '[' | ']';
-	
-SPACE : [ |\t]+;
+STRING : '"' (~[\\"\n\r] | ESCP)* '"';
+fragment ESCP : '\\\\'|'\\r'| '\\t'| '\\b'| 
+'\\f'| '\\\''| '\\"'| '\\\n' | '\\n' | '\\\r\n';

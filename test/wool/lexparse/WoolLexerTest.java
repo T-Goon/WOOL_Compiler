@@ -19,6 +19,7 @@ import wool.utility.*;
  */
 public class WoolLexerTest extends TestRunner
 {
+	
     @ParameterizedTest
     @MethodSource("textTypeProvider")
     void recognizeSingleToken(String text, int type)
@@ -32,14 +33,18 @@ public class WoolLexerTest extends TestRunner
     @ParameterizedTest
     @ValueSource(strings = {
         "hello \"",
-        "\"\"\""
+        "\" hello",
+        "\"\"\"",
+        "\"THis is not \n O.K.\"",
+        "!!!!!!",
+        "someid ! Sometype"
     })
     void badSequenceOfLexemes(String text)
     {
         WoolRunner runner = newLexer(toStream(text));
-        Token t = runner.nextToken();
+        
         Executable e = () -> {
-            Token x = t;
+            Token x = runner.nextToken();
             while (x.getType() != EOF) {
                 x = runner.nextToken();
             }
@@ -87,36 +92,37 @@ public class WoolLexerTest extends TestRunner
     		Arguments.of("a", ID),
     		Arguments.of("world", ID),
             Arguments.of("hello", ID),
-            Arguments.of("he089745099845____dfkjeigJJJJ33", ID),
+            Arguments.of("\the089745099845____dfkjeigJJJJ33\t", ID),
             // TYPE tests
         	Arguments.of("H", TYPE),
         	Arguments.of("HELLO", TYPE),
         	Arguments.of("Hello", TYPE),
         	Arguments.of("Y30984872034", TYPE),
-        	Arguments.of("P__________", TYPE),
+        	Arguments.of("P__________\n", TYPE),
         	Arguments.of("R9875hfg982gh74hfg287gg_uf832_gr_", TYPE),
         	// Keyword tests
-        	Arguments.of("boolean", BOOL),
-        	Arguments.of("class", CLASS),
-        	Arguments.of("else", ELSE),
-        	Arguments.of("end", END),
-        	Arguments.of("false", FALSE),
-        	Arguments.of("fi", FI),
-        	Arguments.of("if", IF),
-        	Arguments.of("in", IN),
-        	Arguments.of("int", INT),
-        	Arguments.of("inherits", INHERITS),
-        	Arguments.of("isnull", ISNULL),
-        	Arguments.of("loop", LOOP),
-        	Arguments.of("new", NEW),
-        	Arguments.of("null", NULL),
-        	Arguments.of("pool", POOL),
-        	Arguments.of("select", SELECT),
-        	Arguments.of("then", THEN),
-        	Arguments.of("true", TRUE),
-        	Arguments.of("while", WHILE),
+        	Arguments.of("boolean", BOOL), Arguments.of("class", CLASS),
+        	Arguments.of("else", ELSE), Arguments.of("end", END),
+        	Arguments.of("false", FALSE), Arguments.of("fi", FI),
+        	Arguments.of("if", IF), Arguments.of("in", IN),
+        	Arguments.of("inherits", INHERITS), Arguments.of("while", WHILE),
+        	Arguments.of("isnull", ISNULL), Arguments.of("loop", LOOP),
+        	Arguments.of("new", NEW), Arguments.of("null", NULL),
+        	Arguments.of("pool", POOL), Arguments.of("select", SELECT),
+        	Arguments.of("then", THEN), Arguments.of("true", TRUE),
+        	// Operators and special characters test
+        	Arguments.of("<-", ASSIGN), Arguments.of("+", PLUS),
+        	Arguments.of("-", MINUS), Arguments.of("*", TIMES),
+        	Arguments.of("/", DIV), Arguments.of("<", LT),
+        	Arguments.of("<=", LTE), Arguments.of("=", EQ),
+        	Arguments.of("~=", AE), Arguments.of(">=", GTE),
+        	Arguments.of(">", GT), Arguments.of("(", LP),
+        	Arguments.of(")", RP), Arguments.of(".", DOT),
+        	Arguments.of(":", TS), Arguments.of(";", EL),
+        	Arguments.of(",",PS),  Arguments.of("~", NEG),
         	// String tests
         	Arguments.of("\"hello\"", STRING),
+        	Arguments.of("     \"hello\"    ", STRING),
         	Arguments.of("\"4750934750world\"", STRING),
         	Arguments.of("\"However, I don't like to eat speakers.\"", STRING),
         	Arguments.of("\"However, I don't like \\\\n to eat speakers.\"", STRING),
@@ -124,9 +130,22 @@ public class WoolLexerTest extends TestRunner
         	Arguments.of("\"\"", STRING),
         	Arguments.of("\"zz\"", STRING),
         	Arguments.of("\"][][[[[][][\"", STRING),
+        	Arguments.of("\"''\"", STRING),
+        	Arguments.of("\"\'\"", STRING),
+        	Arguments.of("\"\\\"\"", STRING),
+        	Arguments.of("\"\\\\n\"", STRING),
+        	Arguments.of("\"THis is \\\n O.K.\"", STRING),
+        	Arguments.of("\" \\\"This is a Quote$$$\\\"\"", STRING),
+        	Arguments.of("\";V!l_*rpo%faD\\f:q\\bp)#e\\\"\\r\"", STRING),
         	// Ignore comments tests
             Arguments.of("# \"comment\"\nworld", ID),
-            Arguments.of("(* comment *) hello", ID)
+            Arguments.of("(* comment *) hello", ID),
+            Arguments.of("class (* comment *) ", CLASS),
+            Arguments.of("class (* comment(* comment *)(* comment *) *) ", CLASS),
+            Arguments.of("(* comment(* comment *)(* comment *) *)class  ", CLASS),
+            Arguments.of("\"string \" (* comment *) ", STRING),
+            Arguments.of("\"string \" #agt93ubsn9e8y tb265sd4fg98s4g   EOF", STRING)
             );
     }
+   
 }
