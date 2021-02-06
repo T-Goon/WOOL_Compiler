@@ -27,5 +27,6 @@ class Simple2 inherits Simple {
 	a : I394875394875 <- stick(null,null , a<-"STring")*a<-a<-1;
 	a : I394875394875 <- stick(null,null , a<-"STring")/a<-a<-1;
 	a : I394875394875 <- - stick(null,null , a<-"STring");
-    
+    a : I394875394875 <- - a>a>=a;
+    a : I394875394875 <- - a+a-a;
 }

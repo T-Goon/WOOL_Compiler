@@ -14,10 +14,9 @@ program                 :   cls+ EOF;       // Non-greedy just to not have a war
 cls : CLASS TYPE inhrt? OC (vardef | method)* CC;
 inhrt : INHERITS TYPE;
 vardef: ID TS TYPE assign? EL;
-assign : ASSIGN expr;
 method : ID LP ((formal PS)* formal)* RP TS TYPE OC vardef* expr CC;
 formal : ID TS TYPE;
-expr : ID assign 
+expr : 	LP expr RP
 	| expr DOT ID LP params? RP
 	| ID LP params? RP
 	| IF expr THEN expr ELSE expr FI
@@ -25,26 +24,27 @@ expr : ID assign
 	| OC (expr EL)+ CC
 	| SELECT (expr TS expr EL)+ END
 	| NEW TYPE
+	| MINUS expr
 	| ISNULL expr 
-	| expr PLUS expr
-	| expr MINUS expr
 	| expr TIMES expr
 	| expr DIV expr
-	| MINUS expr
-	| expr LT expr
+	| expr PLUS expr
+	| expr MINUS expr
 	| expr LTE expr
+	| expr LT expr
 	| expr EQ expr
 	| expr AE expr
-	| expr GTE expr
 	| expr GT expr
+	| expr GTE expr
 	| NEG expr
-	| LP expr RP
+	| ID assign 
 	| ID 
 	| NUM
 	| STRING
 	| TRUE
 	| FALSE 
 	| NULL;
+assign : ASSIGN expr;
 	
 params : (expr (PS expr)*);
 //need to put "this" somewhere
@@ -55,7 +55,6 @@ LINECOMMENT : '#'.*? '\r'? ('\n'|EOF)  -> skip;
 BLOCKCOMMENT : '(*' SUBCOMMENT*? '*)' -> skip;
 fragment SUBCOMMENT : BLOCKCOMMENT | .;
 
-BOOL : 'boolean';
 CLASS : 'class';
 ELSE : 'else';
 END : 'end';
@@ -94,7 +93,7 @@ EL : ';';
 PS : ',';
 NEG : '~';
 
-TYPE : ([A-Z][a-zA-Z0-9_]* | 'int');
+TYPE : ([A-Z][a-zA-Z0-9_]* | 'int' | 'boolean');
 ID : ([a-z][a-zA-Z0-9_]* | 'this');
 NUM : [0-9]+;
 

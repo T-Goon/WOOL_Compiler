@@ -100,8 +100,10 @@ public class WoolLexerTest extends TestRunner
         	Arguments.of("Y30984872034", TYPE),
         	Arguments.of("P__________\n", TYPE),
         	Arguments.of("R9875hfg982gh74hfg287gg_uf832_gr_", TYPE),
+        	Arguments.of("int", TYPE),
+        	Arguments.of("boolean", TYPE),
         	// Keyword tests
-        	Arguments.of("boolean", BOOL), Arguments.of("class", CLASS),
+        	Arguments.of("class", CLASS), Arguments.of("true", TRUE),
         	Arguments.of("else", ELSE), Arguments.of("end", END),
         	Arguments.of("false", FALSE), Arguments.of("fi", FI),
         	Arguments.of("if", IF), Arguments.of("in", IN),
@@ -109,7 +111,7 @@ public class WoolLexerTest extends TestRunner
         	Arguments.of("isnull", ISNULL), Arguments.of("loop", LOOP),
         	Arguments.of("new", NEW), Arguments.of("null", NULL),
         	Arguments.of("pool", POOL), Arguments.of("select", SELECT),
-        	Arguments.of("then", THEN), Arguments.of("true", TRUE),
+        	Arguments.of("then", THEN),
         	// Operators and special characters test
         	Arguments.of("<-", ASSIGN), Arguments.of("+", PLUS),
         	Arguments.of("-", MINUS), Arguments.of("*", TIMES),

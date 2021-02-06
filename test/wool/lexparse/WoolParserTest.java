@@ -56,16 +56,21 @@ class WoolParserTest extends WoolTestRunner
         "exprTest2.wl", // expr parser rule good up to - expr rule
         "exprTest3.wl", // expr parser rule good up to ~ expr rule
         "exprTest4.wl", // expr parser rule is good
+        "exprTest.wl", // Borrowed test case for exprs
         "commentsTest.wl", // Comments are all set
-        "stringTest.wl"
+        "commentTest.wl", // Borrowed test case for comments
+        "stringTest.wl", // Borrowed test case for strings
+        "methodArgExample.wl", // Borrowed test case for method args
+        "stringArgTests.wl", // Borrowed test case for strings as args
+        "vardefTests.wl" // Borrowed test case for vardefs
     })
     void useTestFiles(String f) throws IOException
     {
-        doParse(CharStreams.fromFileName("test-files/" + f));
+        doParse(CharStreams.fromFileName("test-files/posTestFiles/" + f));
         assertNotNull(tree);
     }
     
-//    @ParameterizedTest
+    @ParameterizedTest
     @ValueSource( strings = {
             "empty.wl",
             "randomText.wl",
@@ -73,7 +78,12 @@ class WoolParserTest extends WoolTestRunner
             "vardefBad.wl",
             "vardefBad2.wl",
             "vardefBad3.wl",
-            "vardefBad4.wl"})
+            "vardefBad4.wl",
+            "nestedClasses.wl",
+            "badMethod.wl",
+            "badMethod2.wl",
+            "badMethod3.wl",
+            "badFormal.wl"})
     void negTests(String f) {
     	Executable e = () ->{
     		doParse(CharStreams.fromFileName("test-files/negTestFiles/" + f));
