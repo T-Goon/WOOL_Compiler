@@ -61,15 +61,20 @@ class WoolParserTest extends WoolTestRunner
         "commentTest.wl", // Borrowed test case for comments
         "stringTest.wl", // Borrowed test case for strings
         "methodArgExample.wl", // Borrowed test case for method args
-        "stringArgTests.wl", // Borrowed test case for strings as args
-        "vardefTests.wl" // Borrowed test case for vardefs
+        "stringArgTests.wl" // Borrowed test case for strings as args
     })
     void useTestFiles(String f) throws IOException
     {
-        doParse(CharStreams.fromFileName("test-files/posTestFiles/" + f));
+        doParse(CharStreams.fromFileName("test-files/parserTestFiles/posTestFiles/" + f));
         assertNotNull(tree);
     }
     
+//    @Test
+//    void test() throws IOException {
+//    	doParse(CharStreams.fromFileName("test-files/symbolTableTestFiles/classVar.wl"));
+//        assertNotNull(tree);
+//    }
+//    
     @ParameterizedTest
     @ValueSource( strings = {
             "empty.wl",
@@ -86,7 +91,7 @@ class WoolParserTest extends WoolTestRunner
             "badFormal.wl"})
     void negTests(String f) {
     	Executable e = () ->{
-    		doParse(CharStreams.fromFileName("test-files/negTestFiles/" + f));
+    		doParse(CharStreams.fromFileName("test-files/ParserTestFiles/negTestFiles/" + f));
     	};
     	
     	assertThrows(Exception.class, e);

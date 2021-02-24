@@ -9,47 +9,50 @@ grammar Wool;
 }
  
 // Parser rules
-program                 :   cls+ EOF;       // Non-greedy just to not have a warning
-              									// See (ANTLR) Sec. 15.6
-cls : CLASS TYPE inhrt? OC (vardef | method)* CC;
-inhrt : INHERITS TYPE;
-vardef: ID TS TYPE assign? EL;
-method : ID LP ((formal PS)* formal)* RP TS TYPE OC vardef* expr CC;
-formal : ID TS TYPE;
-expr : 	LP expr RP
-	| expr DOT ID LP params? RP
-	| ID LP params? RP
-	| IF expr THEN expr ELSE expr FI
-	| WHILE expr LOOP expr POOL
-	| OC (expr EL)+ CC
-	| SELECT (expr TS expr EL)+ END
-	| NEW TYPE
-	| MINUS expr
-	| ISNULL expr 
-	| expr TIMES expr
-	| expr DIV expr
-	| expr PLUS expr
-	| expr MINUS expr
-	| expr LTE expr
-	| expr LT expr
-	| expr EQ expr
-	| expr AE expr
-	| expr GT expr
-	| expr GTE expr
-	| NEG expr
-	| ID assign 
-	| ID 
-	| NUM
-	| STRING
-	| TRUE
-	| FALSE 
-	| NULL;
+program                 :   classes += cls+ EOF;       
+              								
+cls : CLASS className=TYPE inhrt? OC (classVars+=vardef | classMeth+=method)* CC;
+inhrt : INHERITS inhrtType=TYPE;
+vardef: ID TS varType=TYPE varInit=assign? EL;
+method : ID LP ((methForms+=formal PS)* methForms+=formal)* RP TS methType=TYPE OC methVars+=vardef* expr CC;
+formal : ID TS formType=TYPE;
+expr : 	
+		LP expr RP									#ParenExpr
+	| obj=expr DOT meth=ID LP params? RP			#ObjMeth
+	| meth=ID LP params? RP							#LocMeth
+	| IF cond=expr THEN then=expr ELSE els=expr FI 	#IfExpr
+	| WHILE cond=expr LOOP body=expr POOL			#WhileExpr
+	| OC (exprs+=expr EL)+ CC						#BlockExpr
+	| SELECT selectPart+ END						#SelectExpr
+	| NEW obj=TYPE									#NewObj
+	| MINUS expr									#NegNumExpr
+	| ISNULL expr 									#NullCheck
+	| left=expr TIMES right=expr					#MulExpr
+	| left=expr DIV right=expr						#DivExpr
+	| left=expr PLUS right=expr						#AddExpr
+	| left=expr MINUS right=expr					#SubExpr
+	| left=expr LTE right=expr						#LTE_Expr
+	| left=expr LT right=expr						#LT_Expr
+	| left=expr EQ right=expr						#EQ_Expr
+	| left=expr AE right=expr						#AE_Expr
+	| left=expr GT right=expr						#GT_Expr
+	| left=expr GTE right=expr						#GTE_Expr
+	| NEG expr										#Neg_Log_Expr
+	| ID assign 									#AssignExpr
+	| ID 											#idExpr
+	| NUM											#intExpr
+	| STRING										#strExpr
+	| TRUE											#trueExpr
+	| FALSE 										#falseExpr
+	| NULL											#nullExpr
+	;
 assign : ASSIGN expr;
+selectPart : (expr TS expr EL);
 	
 params : (expr (PS expr)*);
-//need to put "this" somewhere
-// Should the lexer ignore comments?
 
+
+// Lexer Rules
 WS : [\r\n \t] -> skip;
 LINECOMMENT : '#'.*? '\r'? ('\n'|EOF)  -> skip;
 BLOCKCOMMENT : '(*' SUBCOMMENT*? '*)' -> skip;
