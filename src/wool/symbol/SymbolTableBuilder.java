@@ -13,9 +13,14 @@ import wool.lexparse.WoolParser.VardefContext;
 import wool.symbol.BindingFactory.ClassBinding;
 import wool.symbol.BindingFactory.ObjectBinding;
 
+/**
+ * 
+ * Visitor class that does the first pass through the parse tree
+ * to create the symbol table.
+ * Does not catch any redefinition errors caused by inheritance.
+ */
 public class SymbolTableBuilder extends WoolBaseVisitor<Void> {
 	private TableManager tm;
-//	ParseTreeProperty<Integer> values = new ParseTreeProperty<Integer>();
 
 	public SymbolTableBuilder() {
 		tm = TableManager.getInstance();
@@ -55,6 +60,7 @@ public class SymbolTableBuilder extends WoolBaseVisitor<Void> {
 
 	@Override
 	public Void visitVardef(VardefContext ctx) {
+		// Add variable to method or class tables
 		String name = ctx.ID().getText().toString();
 		String type = ctx.varType.getText().toString();
 		Token t = ctx.getStart();
@@ -74,7 +80,7 @@ public class SymbolTableBuilder extends WoolBaseVisitor<Void> {
 	@Override
 	public Void visitMethod(MethodContext ctx) {
 		String name = ctx.ID().getText().toString();
-		String type = ctx.methType.toString().toString();
+		String type = ctx.methType.getText().toString();
 		
 		MethodDescriptor md = new MethodDescriptor(name, type);
 		
@@ -100,8 +106,6 @@ public class SymbolTableBuilder extends WoolBaseVisitor<Void> {
 			v.accept(this);
 		}
 		
-		// TODO The expr
-		
 		// Exit method body scope
 		tm.exitScope();
 		
@@ -110,6 +114,7 @@ public class SymbolTableBuilder extends WoolBaseVisitor<Void> {
 
 	@Override
 	public Void visitFormal(FormalContext ctx) {
+		// Add formal to method table
 		String name = ctx.ID().getText().toString();
 		String type = ctx.formType.getText().toString();
 		

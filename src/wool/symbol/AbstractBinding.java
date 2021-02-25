@@ -34,7 +34,7 @@ public abstract class AbstractBinding implements Binding
      * Default constructor
      * @param symbol the name of the symbol
      * @param symbolType the type (class) associated with the binding
-     * @param bindingType identifes the binding type
+     * @param bindingType identifies the binding type
      * @param t the token associated with this binding
      */
     public AbstractBinding(String symbol, String symbolType, 

@@ -246,7 +246,7 @@ public class TableManager
     }
     
     /**
-     * Search for a method binding for a nethod, given a starting class. If the binding
+     * Search for a method binding for a method, given a starting class. If the binding
      * is not found in the specified class, then search up the class hierarchy.
      * @param methodName the method name
      * @param className the starting class

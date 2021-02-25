@@ -1,0 +1,5 @@
+class Simple{
+}
+
+class Simple{
+}
