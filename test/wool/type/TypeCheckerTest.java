@@ -45,7 +45,8 @@ class TypeCheckerTest {
 	
 	// Works if there is no error
 	@ParameterizedTest
-	@CsvSource({"/math.wl" // Types of math exprs done correctly
+	@CsvSource({"/math.wl", // Types of math exprs done correctly
+		"/compare.wl"
 		})
 	void posTests(String file) throws IOException {
 		ParseTree tree;
@@ -65,7 +66,9 @@ class TypeCheckerTest {
 	@ParameterizedTest
 	@CsvSource({
 		"/addStrings.wl", // Error on adding int and bool
-		"/addBools.wl" // Error on adding int and string
+		"/addBools.wl", // Error on adding int and string
+		"/compareChain.wl", // Error on chaining comparison ops
+		"/compareNotInt.wl" // Error on comparing non-ints
 	})
 	void negTests(String file) throws IOException {
 		ParseTree tree;

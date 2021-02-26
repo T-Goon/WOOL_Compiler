@@ -69,6 +69,7 @@ class SymbolTableCheckerTest {
 		"/inhrtBad.wl", // Test inherited class does not exist
 		"/inhrtBad2.wl", // Test inherited classes have a cycle
 		"/inhrtBad3.wl", // Test inherited classes have a cycle
+		"/inhrtBad4.wl", // Test inherited classes have a cycle
 		"/inhrtVarBad.wl", // Test error on redefined inherited variables
 		"/classVarInitBad.wl", // Test error on class variable use before definition
 		"/outsideRef.wl", // Test error on class variable use outside class
@@ -82,7 +83,9 @@ class SymbolTableCheckerTest {
 		"/objInstanceBad.wl", //Create instance of class that doesn't exist
 		"/inhertInt.wl", // Error on inherit from int
 		"/inhrtBool.wl", // Error on inherit from boolean
-		"/inhrtStr.wl" // Error on inherit from Str
+		"/inhrtStr.wl", // Error on inherit from Str
+		"/intInstance.wl", // Error on instance of Int object
+		"/boolInstance.wl" // Error on instance of Bool object
 	})
 	void negTests(String file) throws IOException {
 		ParseTree tree;
@@ -96,6 +99,7 @@ class SymbolTableCheckerTest {
 			tree.accept(stc);
         };
 		
+        System.out.print(file+" ");
         System.out.println(assertThrows(Exception.class, e).getMessage());
 	}
 }
