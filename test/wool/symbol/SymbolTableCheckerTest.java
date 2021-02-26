@@ -49,7 +49,7 @@ class SymbolTableCheckerTest {
 		"/methVarRef.wl", // Test referencing variables in a method
 		"/objMethExpr.wl", // Test referencing methods with . operator
 		"/locMethRef.wl", // Test that using local method references is correct
-		"/objInstance.wl"
+		"/objInstance.wl"// Create instance of object correctly
 		})
 	void posTests(String file) throws IOException {
 		ParseTree tree;
@@ -79,8 +79,10 @@ class SymbolTableCheckerTest {
 		"/objMethExprBad2.wl", // Test using method with wrong number of args
 		"/locMethRefBad.wl", // Test using outside method with local usage
 		"/locMethRefBad2.wl", // Test local method call with bad number of args
-		"/objInstanceBad.wl"
-		
+		"/objInstanceBad.wl", //Create instance of class that doesn't exist
+		"/inhertInt.wl", // Error on inherit from int
+		"/inhrtBool.wl", // Error on inherit from boolean
+		"/inhrtStr.wl" // Error on inherit from Str
 	})
 	void negTests(String file) throws IOException {
 		ParseTree tree;

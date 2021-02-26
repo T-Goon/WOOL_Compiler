@@ -31,6 +31,7 @@ class SymbolTableBuilderTest {
 	private static ParseTree cmTree;
 	private static ParseTree mvTree;
 	private static ParseTree crdTree;
+	private static ParseTree crdsTree;
 	private static ParseTree cvrdTree;
 	private static ParseTree cmrdTree;
 	private static ParseTree mvrdTree;
@@ -61,6 +62,11 @@ class SymbolTableBuilderTest {
 		imp = WoolFactory.makeParserRunner(
 				CharStreams.fromFileName("test-files/symbolTableTestFiles/negTestFiles/classRedef.wl"));
 		crdTree = imp.parse();
+		
+		// Parse Tree for methVarRedefTest
+		imp = WoolFactory.makeParserRunner(
+				CharStreams.fromFileName("test-files/symbolTableTestFiles/negTestFiles/strRedef.wl"));
+		crdsTree = imp.parse();
 		
 		// Parse Tree for classVarRedefTest
 		imp = WoolFactory.makeParserRunner(
@@ -165,6 +171,16 @@ class SymbolTableBuilderTest {
         assertThrows(Exception.class, e);
 	}
 	
+	// Test that redefining a Str
+	@Test
+	void classRedefTest2() {
+		
+		Executable e = () -> {
+			crdsTree.accept(stb);
+        };
+        assertThrows(Exception.class, e);
+	}
+	
 	// Test that redefining a class variable results in error
 	@Test
 	void classVarRedefTest() {
@@ -194,6 +210,8 @@ class SymbolTableBuilderTest {
         };
         assertThrows(Exception.class, e);
 	}
+	
+	
 	
 //	@Test
 //	void test() throws IOException{
