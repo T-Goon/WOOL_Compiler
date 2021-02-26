@@ -85,7 +85,8 @@ class SymbolTableCheckerTest {
 		"/inhrtBool.wl", // Error on inherit from boolean
 		"/inhrtStr.wl", // Error on inherit from Str
 		"/intInstance.wl", // Error on instance of Int object
-		"/boolInstance.wl" // Error on instance of Bool object
+		"/boolInstance.wl", // Error on instance of Bool object
+		"/varDefBadType.wl" // Variable def with non-existant type
 	})
 	void negTests(String file) throws IOException {
 		ParseTree tree;

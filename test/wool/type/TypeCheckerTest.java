@@ -45,8 +45,16 @@ class TypeCheckerTest {
 	
 	// Works if there is no error
 	@ParameterizedTest
-	@CsvSource({"/math.wl", // Types of math exprs done correctly
-		"/compare.wl"
+	@CsvSource({
+		"/math.wl", // Types of arithmetic exprs done correctly
+		"/compare.wl", // Types for comparison exprs done correctly
+		"/varDefType.wl", // Types for vardef and new obj exprs done correctly
+		"/assignExpr.wl", // Types for assign expr done correctly
+		"/eq.wl", // Equality operators check types correctly
+		"/if.wl", // If expression checks types correctly
+		"/select.wl", // select expression checks types correctly
+		"/while.wl", // while expression checks types correctly
+		"/block.wl" // block expression evaluates to the correct type
 		})
 	void posTests(String file) throws IOException {
 		ParseTree tree;
@@ -68,7 +76,16 @@ class TypeCheckerTest {
 		"/addStrings.wl", // Error on adding int and bool
 		"/addBools.wl", // Error on adding int and string
 		"/compareChain.wl", // Error on chaining comparison ops
-		"/compareNotInt.wl" // Error on comparing non-ints
+		"/compareNotInt.wl", // Error on comparing non-ints
+		"/newObjBad.wl", // Expr type does not conform to ID type
+		"/badAssign.wl", // Error on assign string to int
+		"/assignExprBad.wl", // Error on assign expr conform types
+		"/eqBad.wl", // Error on bad use of equality operators
+		"/ifBadCond.wl", // Error if statement cond not a bool
+		"/ifIntCheck.wl", // Error primitive only in one branch
+		"/selBadCond.wl", // Error on select cond not bool
+		"/selPrimCheck.wl", // Error on alts not matching primitive type
+		"/whileBadCond.wl" // Error on while cond not bool
 	})
 	void negTests(String file) throws IOException {
 		ParseTree tree;
@@ -95,7 +112,7 @@ class TypeCheckerTest {
 		ParseTree tree;
 		
 		WoolRunnerImpl imp = WoolFactory.makeParserRunner(
-				CharStreams.fromFileName(posFilesLoc+"/math.wl"));
+				CharStreams.fromFileName(posFilesLoc+"/eq.wl"));
 		tree = imp.parse();
 		
         List<String> ruleNames = Arrays.asList(imp.getParser().getRuleNames());

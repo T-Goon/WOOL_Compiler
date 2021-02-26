@@ -35,8 +35,7 @@ expr :
 	| left=expr LT right=expr						#LT_Expr
 	| left=expr GT right=expr						#GT_Expr
 	| left=expr GTE right=expr						#GTE_Expr
-	| left=expr EQ right=expr						#EQ_Expr
-	| left=expr AE right=expr						#AE_Expr
+	| <assoc=right>left=expr (EQ | AE) right=expr	#EQ_Expr
 	| NEG expr										#Neg_Log_Expr
 	| ID assign 									#AssignExpr
 	| ID 											#idExpr
@@ -47,7 +46,7 @@ expr :
 	| NULL											#nullExpr
 	;
 assign : ASSIGN expr;
-selectPart : (expr TS expr EL);
+selectPart : (first=expr TS second=expr EL);
 	
 params : (methForms+=expr (PS methForms+=expr)*);
 
