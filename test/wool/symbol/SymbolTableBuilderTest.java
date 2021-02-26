@@ -23,8 +23,8 @@ import wool.utility.WoolRunnerImpl;
  */
 class SymbolTableBuilderTest {
 	
-	private TableManager tm = TableManager.getInstance();
-	private SymbolTableBuilder stb = new SymbolTableBuilder();
+	private TableManager tm;
+	private SymbolTableBuilder stb;
 	
 	private static ParseTree cTree;
 	private static ParseTree cvTree;
@@ -81,14 +81,17 @@ class SymbolTableBuilderTest {
 	@BeforeEach
 	void setUp() {
 		TableManager.reset();
+		tm = TableManager.getInstance();
+		stb = new SymbolTableBuilder();
 	}
 
 	// Test adding classes to the symbol table
 	@ParameterizedTest
-	@ValueSource(strings= {
-			"Simple",
+	@CsvSource({
+			"SomeClass",
 			"Simple2",
-			"Simple3"
+			"Simple3",
+			"B"
 	})
 	void classTest(String cls) throws IOException{
 		

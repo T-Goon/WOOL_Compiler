@@ -11,6 +11,7 @@ import wool.lexparse.WoolParser.MethodContext;
 import wool.lexparse.WoolParser.ProgramContext;
 import wool.lexparse.WoolParser.VardefContext;
 import wool.symbol.BindingFactory.ClassBinding;
+import wool.symbol.BindingFactory.MethodBinding;
 import wool.symbol.BindingFactory.ObjectBinding;
 
 /**
@@ -72,6 +73,11 @@ public class SymbolTableBuilder extends WoolBaseVisitor<Void> {
 			ClassBinding cb = tm.currentClassBinding;
 			ClassDescriptor cd = cb.getClassDescriptor();
 			cd.addVariable(var);
+		} else {
+			// Variable not at class scope so it is in a method
+			MethodBinding mb = tm.currentMethodBinding;
+			MethodDescriptor md = mb.getMethodDescriptor();
+			md.addVariable(var);
 		}
 		
 		return null;
@@ -118,7 +124,9 @@ public class SymbolTableBuilder extends WoolBaseVisitor<Void> {
 		String name = ctx.ID().getText().toString();
 		String type = ctx.formType.getText().toString();
 		
-		tm.newVariable(name, type, ctx.getStart());
+		ObjectBinding form = tm.newVariable(name, type, ctx.getStart());
+		MethodDescriptor md = tm.currentMethodBinding.getMethodDescriptor();
+		md.addVariable(form);
 		
 		return null;
 	}

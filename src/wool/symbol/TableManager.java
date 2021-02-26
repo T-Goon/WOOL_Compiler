@@ -32,6 +32,7 @@ public class TableManager
     public SymbolTable classTable;
     public String currentClassName;
     public ClassBinding currentClassBinding;
+    public MethodBinding currentMethodBinding;
     public SymbolTable currentTable;
     public CommonTokenFactory tokenFactory = (CommonTokenFactory) CommonTokenFactory.DEFAULT;
     // Self token is put in every class.
@@ -50,6 +51,7 @@ public class TableManager
         initializeBaseClasses();
         currentClassName = null;
         currentClassBinding = null;
+        currentMethodBinding = null;
         selfToken = tokenFactory.create(wool.lexparse.WoolLexer.ID, "self");
     }
     
@@ -160,6 +162,7 @@ public class TableManager
         }
         MethodBinding mb = makeMethodBinding(md, t, currentClassName);
         currentClassBinding.descriptor.addMethod(mb);
+        currentMethodBinding = mb;
         return mb;
     }
     

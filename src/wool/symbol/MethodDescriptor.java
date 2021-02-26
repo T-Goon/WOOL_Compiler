@@ -14,7 +14,12 @@
 
 package wool.symbol;
 
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
+
+import wool.symbol.BindingFactory.ObjectBinding;
+import wool.utility.WoolException;
 
 /**
  * The MethodDescriptor describes the properties of a method needed to do type
@@ -25,6 +30,7 @@ public class MethodDescriptor
 {
     public String returnType;                  // type this method returns
     public LinkedList<String> argumentTypes;   // the class of each argument in order.
+    public Map<String, ObjectBinding> variables;
     public String methodName;
     
     /**
@@ -35,6 +41,7 @@ public class MethodDescriptor
         this.methodName = methodName;
         this.returnType = returnType;
         argumentTypes = new LinkedList<String>();
+        variables = new HashMap<String,ObjectBinding>();
     }
     
     /**
@@ -49,6 +56,7 @@ public class MethodDescriptor
         this.methodName = methodName;
         this.returnType = returnType;
         argumentTypes = new LinkedList<String>();
+        variables = new HashMap<String,ObjectBinding>();
         for (String arg : arguments) {
             addArgumentType(arg);
         }
@@ -62,6 +70,24 @@ public class MethodDescriptor
     {
         argumentTypes.add(type);
     }
+    
+    /**
+     * Add a variable that is declared in the method.
+     * @param var The variable added.
+     * @return The variable added.
+     */
+    public Binding addVariable(ObjectBinding var)
+    {
+        
+        if (variables.containsKey(var.symbol)) {
+        	throw new WoolException("Attempt to add a duplicate varible "+ var.symbol
+            		+" to method " + methodName);
+        }
+        variables.put(var.symbol,  var);
+        
+        return var;
+    }
+
 
     /**
      * @return the returnType

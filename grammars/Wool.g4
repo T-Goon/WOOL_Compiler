@@ -33,10 +33,10 @@ expr :
 	| left=expr MINUS right=expr					#SubExpr
 	| left=expr LTE right=expr						#LTE_Expr
 	| left=expr LT right=expr						#LT_Expr
-	| left=expr EQ right=expr						#EQ_Expr
-	| left=expr AE right=expr						#AE_Expr
 	| left=expr GT right=expr						#GT_Expr
 	| left=expr GTE right=expr						#GTE_Expr
+	| left=expr EQ right=expr						#EQ_Expr
+	| left=expr AE right=expr						#AE_Expr
 	| NEG expr										#Neg_Log_Expr
 	| ID assign 									#AssignExpr
 	| ID 											#idExpr
@@ -49,7 +49,7 @@ expr :
 assign : ASSIGN expr;
 selectPart : (expr TS expr EL);
 	
-params : (expr (PS expr)*);
+params : (methForms+=expr (PS methForms+=expr)*);
 
 
 // Lexer Rules
