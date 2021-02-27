@@ -76,17 +76,14 @@ class SymbolTableCheckerTest {
 		"/assignExprRefBad.wl", // Test error on class variable use before definition from assign expression.
 		"/methRedefBad.wl", // Test error on bad inherited method redefinition
 		"/methVarRefBad.wl", // Test error on bad var ref in method
-		"/objMethExprBad.wl", // Test ref method name that does not exist
-		"/objMethExprBad2.wl", // Test using method with wrong number of args
-		"/locMethRefBad.wl", // Test using outside method with local usage
-		"/locMethRefBad2.wl", // Test local method call with bad number of args
 		"/objInstanceBad.wl", //Create instance of class that doesn't exist
 		"/inhertInt.wl", // Error on inherit from int
 		"/inhrtBool.wl", // Error on inherit from boolean
 		"/inhrtStr.wl", // Error on inherit from Str
 		"/intInstance.wl", // Error on instance of Int object
 		"/boolInstance.wl", // Error on instance of Bool object
-		"/varDefBadType.wl" // Variable def with non-existant type
+		"/varDefBadType.wl", // Variable def with non-existant type
+		"/this2.wl" // Error on assign to this
 	})
 	void negTests(String file) throws IOException {
 		ParseTree tree;

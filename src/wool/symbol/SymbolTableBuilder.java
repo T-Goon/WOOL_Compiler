@@ -13,6 +13,7 @@ import wool.lexparse.WoolParser.VardefContext;
 import wool.symbol.BindingFactory.ClassBinding;
 import wool.symbol.BindingFactory.MethodBinding;
 import wool.symbol.BindingFactory.ObjectBinding;
+import wool.utility.WoolException;
 
 /**
  * 
@@ -22,6 +23,7 @@ import wool.symbol.BindingFactory.ObjectBinding;
  */
 public class SymbolTableBuilder extends WoolBaseVisitor<Void> {
 	private TableManager tm;
+	private String currentClass;
 
 	public SymbolTableBuilder() {
 		tm = TableManager.getInstance();
@@ -37,6 +39,7 @@ public class SymbolTableBuilder extends WoolBaseVisitor<Void> {
 	public Void visitCls(ClsContext ctx) {
 		String name = ctx.className.getText().toString();
 		String inhrt = null;
+		currentClass = name;
 		
 		if(ctx.inhrt() != null) {
 			inhrt = ctx.inhrt().inhrtType.getText().toString();
@@ -66,6 +69,22 @@ public class SymbolTableBuilder extends WoolBaseVisitor<Void> {
 		String type = ctx.varType.getText().toString();
 		Token t = ctx.getStart();
 		
+		// Change int and bool to the class name
+		if(type.equals("int")) {
+			type = "Int";
+		}
+		
+		if(type.equals("boolean")) {
+			type = "Bool";
+		}
+		
+		if(name.equals("this")) {
+			throw new WoolException(
+					"Line "+ctx.getStart().getLine()+
+					", Class "+currentClass+
+					", Cannont create attribute named \"this\"");
+		}
+		
 		ObjectBinding var = tm.newVariable(name, type, t);
 		
 		// If the variable def is in a class, add the binding to the descriptor.
@@ -88,12 +107,30 @@ public class SymbolTableBuilder extends WoolBaseVisitor<Void> {
 		String name = ctx.ID().getText().toString();
 		String type = ctx.methType.getText().toString();
 		
+		// Change int and bool to the class name
+		if(type.equals("int")) {
+			type = "Int";
+		}
+		
+		if(type.equals("boolean")) {
+			type = "Bool";
+		}
+		
 		MethodDescriptor md = new MethodDescriptor(name, type);
 		
 		// Add the types to the method descriptor
 		if(ctx.methForms != null) {
 			for(FormalContext f : ctx.methForms) {
-				md.addArgumentType(f.formType.getText().toString());
+				String t = f.formType.getText().toString();
+				// Change int and bool to the class name
+				if(t.equals("int")) {
+					t = "Int";
+				}
+				
+				if(t.equals("boolean")) {
+					t = "Bool";
+				}
+				md.addArgumentType(t);
 			}
 		}
 		
@@ -123,6 +160,15 @@ public class SymbolTableBuilder extends WoolBaseVisitor<Void> {
 		// Add formal to method table
 		String name = ctx.ID().getText().toString();
 		String type = ctx.formType.getText().toString();
+		
+		// Change int and bool to the class name
+		if(type.equals("int")) {
+			type = "Int";
+		}
+		
+		if(type.equals("boolean")) {
+			type = "Bool";
+		}
 		
 		ObjectBinding form = tm.newVariable(name, type, ctx.getStart());
 		MethodDescriptor md = tm.currentMethodBinding.getMethodDescriptor();

@@ -30,11 +30,8 @@ class SymbolTableBuilderTest {
 	private static ParseTree cvTree;
 	private static ParseTree cmTree;
 	private static ParseTree mvTree;
-	private static ParseTree crdTree;
-	private static ParseTree crdsTree;
-	private static ParseTree cvrdTree;
-	private static ParseTree cmrdTree;
-	private static ParseTree mvrdTree;
+	
+	private String negFilesLoc = "test-files/symbolTableTestFiles/negTestFiles";
 	
 	@BeforeAll
 	static void makeTrees() throws IOException {
@@ -57,31 +54,6 @@ class SymbolTableBuilderTest {
 		imp = WoolFactory.makeParserRunner(
 				CharStreams.fromFileName("test-files/symbolTableTestFiles/posTestFiles/methVars.wl"));
 		mvTree = imp.parse();
-		
-		// Parse Tree for classRedefTest
-		imp = WoolFactory.makeParserRunner(
-				CharStreams.fromFileName("test-files/symbolTableTestFiles/negTestFiles/classRedef.wl"));
-		crdTree = imp.parse();
-		
-		// Parse Tree for methVarRedefTest
-		imp = WoolFactory.makeParserRunner(
-				CharStreams.fromFileName("test-files/symbolTableTestFiles/negTestFiles/strRedef.wl"));
-		crdsTree = imp.parse();
-		
-		// Parse Tree for classVarRedefTest
-		imp = WoolFactory.makeParserRunner(
-				CharStreams.fromFileName("test-files/symbolTableTestFiles/negTestFiles/classVarRedef.wl"));
-		cvrdTree = imp.parse();
-		
-		// Parse Tree for classMethRedefTest
-		imp = WoolFactory.makeParserRunner(
-				CharStreams.fromFileName("test-files/symbolTableTestFiles/negTestFiles/classMethRedef.wl"));
-		cmrdTree = imp.parse();
-		
-		// Parse Tree for methVarRedefTest
-		imp = WoolFactory.makeParserRunner(
-				CharStreams.fromFileName("test-files/symbolTableTestFiles/negTestFiles/methVarRedef.wl"));
-		mvrdTree = imp.parse();
 	}
 	
 	@BeforeEach
@@ -161,75 +133,27 @@ class SymbolTableBuilderTest {
 		assertNotNull(t.lookup(var));
 	}
 	
-	// Test that redefining a class results in error
-	@Test
-	void classRedefTest() {
+	@ParameterizedTest
+	@CsvSource({
+		"/this.wl", // Error on create variable named this
+		"/methVarRedef.wl", // Error on redef of var in meth
+		"/classRedef.wl", // Test that redefining a class results in error
+		"/strRedef.wl", // Test that redefining a Str
+		"/classVarRedef.wl", // Test that redefining a class variable results in error
+		"/classMethRedef.wl", // Test that redefining a class method results in error
+		"/formRedef.wl" // Formal id redef
+		})
+	public void negTest(String file) throws IOException{
+		ParseTree tree;
+		
+		WoolRunnerImpl imp = WoolFactory.makeParserRunner(
+				CharStreams.fromFileName(negFilesLoc+file));
+		tree = imp.parse();
 		
 		Executable e = () -> {
-			crdTree.accept(stb);
+			tree.accept(stb);
         };
         assertThrows(Exception.class, e);
 	}
-	
-	// Test that redefining a Str
-	@Test
-	void classRedefTest2() {
-		
-		Executable e = () -> {
-			crdsTree.accept(stb);
-        };
-        assertThrows(Exception.class, e);
-	}
-	
-	// Test that redefining a class variable results in error
-	@Test
-	void classVarRedefTest() {
-		
-		Executable e = () -> {
-			cvrdTree.accept(stb);
-        };
-        assertThrows(Exception.class, e);
-	}
-	
-	// Test that redefining a class method results in error
-	@Test
-	void classMethRedefTest() {
-		
-		Executable e = () -> {
-			cmrdTree.accept(stb);
-        };
-        assertThrows(Exception.class, e);
-	}
-	
-	// Test that redefining a method variable results in error
-	@Test
-	void methVarRedefTest() {
-		
-		Executable e = () -> {
-			mvrdTree.accept(stb);
-        };
-        assertThrows(Exception.class, e);
-	}
-	
-	
-	
-//	@Test
-//	void test() throws IOException{
-//		WoolRunnerImpl imp = WoolFactory.makeParserRunner(
-//				CharStreams.fromFileName("test-files/symbolTableTestFiles/classVar.wl"));
-//		ParseTree tree = imp.parse();
-//		
-//		tree.accept(stb);
-//		
-//		ClassBinding d = tm.lookupClass("Simple");
-//		
-//		ClassDescriptor cd = d.getClassDescriptor();
-//		
-//		ObjectBinding var = cd.getVariable("var1");
-//		
-//		System.out.println(var.toString());
-//		
-//		assertTrue(true);
-//	}
 
 }

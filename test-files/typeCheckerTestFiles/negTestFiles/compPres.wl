@@ -1,0 +1,1 @@
+class A{a :boolean <- 1>2>=3<3;}

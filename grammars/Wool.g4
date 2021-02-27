@@ -27,15 +27,10 @@ expr :
 	| NEW obj=TYPE									#NewObj
 	| MINUS expr									#NegNumExpr
 	| ISNULL expr 									#NullCheck
-	| left=expr TIMES right=expr					#MulExpr
-	| left=expr DIV right=expr						#DivExpr
-	| left=expr PLUS right=expr						#AddExpr
-	| left=expr MINUS right=expr					#SubExpr
-	| left=expr LTE right=expr						#LTE_Expr
-	| left=expr LT right=expr						#LT_Expr
-	| left=expr GT right=expr						#GT_Expr
-	| left=expr GTE right=expr						#GTE_Expr
-	| <assoc=right>left=expr (EQ | AE) right=expr	#EQ_Expr
+	| left=expr mulDivOps right=expr				#MulDivExpr
+	| left=expr plusMinOps right=expr				#AddSubExpr
+	| <assoc=right>left=expr compOps right=expr		#Comp_Expr
+	| <assoc=right>left=expr eqOps right=expr		#EQ_Expr
 	| NEG expr										#Neg_Log_Expr
 	| ID assign 									#AssignExpr
 	| ID 											#idExpr
@@ -46,6 +41,10 @@ expr :
 	| NULL											#nullExpr
 	;
 assign : ASSIGN expr;
+mulDivOps : (TIMES | DIV);
+plusMinOps : (PLUS | MINUS);
+compOps : (LTE| LT | GT | GTE);
+eqOps : (EQ | AE);
 selectPart : (first=expr TS second=expr EL);
 	
 params : (methForms+=expr (PS methForms+=expr)*);

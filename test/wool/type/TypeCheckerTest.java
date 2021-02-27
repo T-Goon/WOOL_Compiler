@@ -27,6 +27,10 @@ import wool.symbol.TableManager;
 import wool.utility.WoolFactory;
 import wool.utility.WoolRunnerImpl;
 
+/**
+ * Tests the type checking phase of the semantic analysis.
+ *
+ */
 class TypeCheckerTest {
 
 	private SymbolTableBuilder stb;
@@ -54,7 +58,11 @@ class TypeCheckerTest {
 		"/if.wl", // If expression checks types correctly
 		"/select.wl", // select expression checks types correctly
 		"/while.wl", // while expression checks types correctly
-		"/block.wl" // block expression evaluates to the correct type
+		"/block.wl", // block expression evaluates to the correct type
+		"/objMeth.wl", // use method calls correctly
+		"/thisRef.wl", // reference this correctly
+		"/methType.wl", // meth ret and expr type correct
+		"/selfType.wl" // self_type is computed correctly
 		})
 	void posTests(String file) throws IOException {
 		ParseTree tree;
@@ -76,6 +84,7 @@ class TypeCheckerTest {
 		"/addStrings.wl", // Error on adding int and bool
 		"/addBools.wl", // Error on adding int and string
 		"/compareChain.wl", // Error on chaining comparison ops
+		"/compPres.wl", // Error on chaining comparison ops
 		"/compareNotInt.wl", // Error on comparing non-ints
 		"/newObjBad.wl", // Expr type does not conform to ID type
 		"/badAssign.wl", // Error on assign string to int
@@ -85,7 +94,15 @@ class TypeCheckerTest {
 		"/ifIntCheck.wl", // Error primitive only in one branch
 		"/selBadCond.wl", // Error on select cond not bool
 		"/selPrimCheck.wl", // Error on alts not matching primitive type
-		"/whileBadCond.wl" // Error on while cond not bool
+		"/whileBadCond.wl", // Error on while cond not bool
+		"/methNotExist.wl", // Error on method name that doesn't exist
+		"/methParamNum.wl", // Error on wrong number of meth params
+		"/methParamType.wl", // Error on wrong type of param
+		"/locMethRefBad.wl", // Test using outside method with local usage
+		"/locMethRefBad2.wl", // Test local method call with bad number of args
+		"/objMethExprBad.wl", // Test ref method name that does not exist
+		"/objMethExprBad2.wl", // Test using method with wrong number of args
+		"/methTypeBad.wl" // meth expr and ret type don't match
 	})
 	void negTests(String file) throws IOException {
 		ParseTree tree;
@@ -104,36 +121,5 @@ class TypeCheckerTest {
 		
         System.out.println(assertThrows(Exception.class, e).getMessage());
 	}
-	
-//	@Test
-	public void showTree() throws IOException
-    {
-		
-		ParseTree tree;
-		
-		WoolRunnerImpl imp = WoolFactory.makeParserRunner(
-				CharStreams.fromFileName(posFilesLoc+"/eq.wl"));
-		tree = imp.parse();
-		
-        List<String> ruleNames = Arrays.asList(imp.getParser().getRuleNames());
-        TreeViewer tv = new TreeViewer(ruleNames, tree);
-        JFrame frame = new JFrame("Parse Tree");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(tv);
-        
-        //Display the window.
-        frame.pack();
-        frame.setVisible(true);
-        BufferedReader br = 
-                new BufferedReader(new InputStreamReader(System.in));
-        try {
-            br.readLine();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        
-        assertTrue(true);
-    }
 
 }

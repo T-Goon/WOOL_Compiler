@@ -18,7 +18,7 @@ import wool.lexparse.*;
 /**
  * The WoolRunner is an object produced by the WoolFactory. It provides handles
  * to all of the methods needed to run the compiler. By default, each of these methods
- * throws a CoolException unless the factory created the necessary components when
+ * throws a WoolException unless the factory created the necessary components when
  * creating the runner.
  * @version Oct 25, 2017
  */
@@ -36,7 +36,7 @@ public interface WoolRunner
      */
     ParserRuleContext parse();
     
-    ParserRuleContext buildSymbolTable();
+    ParserRuleContext semantic();
     
 //    /**
 //     * Parse the input and produce the AST.

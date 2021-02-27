@@ -1,6 +1,6 @@
 class A{
 c : B;
-b : int <- c.method2(d, e, f);
+b : int <- c.method2(1, 2, 3);
 
 method1 (e:boolean, f:boolean) : int{
 this.method1(true, false)

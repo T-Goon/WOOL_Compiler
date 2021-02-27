@@ -1,5 +1,5 @@
 class A{
-
+c : B;
 b : int <- c.method3(3);
 d : int <- this.method1(true, false);
 

@@ -3,17 +3,20 @@ package wool.utility;
 import java.util.*;
 import java.util.function.Supplier;
 import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.tree.ParseTreeProperty;
+
 import wool.lexparse.*;
+import wool.symbol.AbstractBinding;
 //import wool.symbol.SymbolTableBuilder;
 import wool.symbol.SymbolTableBuilder;
+import wool.symbol.SymbolTableChecker;
+import wool.type.TypeChecker;
 
 public class WoolRunnerImpl implements WoolRunner
 {
     private WoolLexer lexer;
     private WoolParser parser;
-//    private ASTNode ast;
     private ParserRuleContext parseTree;
-//    private LinkedList<IRinstruction> ir;
     
     private Supplier<Token> nextToken;
     
@@ -28,7 +31,7 @@ public class WoolRunnerImpl implements WoolRunner
     /************************************************************************** 
      * Compiler Actions 
      * These methods will usually be called by external clients. These are the
-     * methods called by the CoolRunner interface
+     * methods called by the WoolRunner interface
      */
     
     /*
@@ -51,11 +54,18 @@ public class WoolRunnerImpl implements WoolRunner
     }
     
     @Override
-    public ParserRuleContext buildSymbolTable()
+    public ParserRuleContext semantic()
     {
         parseTree = parse();
         SymbolTableBuilder stb = new SymbolTableBuilder();
+        
         parseTree.accept(stb);
+        SymbolTableChecker stc = new SymbolTableChecker();
+        
+		ParseTreeProperty<AbstractBinding> bindings = stc.visit(parseTree);
+		TypeChecker tc = new TypeChecker(bindings);
+		parseTree.accept(tc);
+		
         return parseTree;
     }
 //    
@@ -67,7 +77,7 @@ public class WoolRunnerImpl implements WoolRunner
 //        ast = parseTree.accept(creator);
 //        return ast;
 //    }
-//    
+    
 //    @Override
 //    public ASTNode typecheck()
 //    {
