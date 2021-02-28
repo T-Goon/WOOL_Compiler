@@ -77,7 +77,7 @@ public class TableManager
         cd.addMethod(makeMethodBinding(md, null, "Object"));
         md = new MethodDescriptor("copy", "SELF_TYPE");
         cd.addMethod(makeMethodBinding(md, null, "Object"));
-        cd.addVariable(makeObjectBinding("self", "SELF_TYPE", selfToken));
+//        cd.addVariable(makeObjectBinding("this", "SELF_TYPE", selfToken));
         classTable.add("Object", makeClassBinding(cd));
         // IO
         cd = new ClassDescriptor("IO");
@@ -93,7 +93,7 @@ public class TableManager
         cd.addMethod(makeMethodBinding(md, null, "IO"));
         md = new MethodDescriptor("inBool", "Bool");
         cd.addMethod(makeMethodBinding(md, null, "IO"));
-        cd.addVariable(makeObjectBinding("self", "SELF_TYPE", selfToken));
+//        cd.addVariable(makeObjectBinding("this", "SELF_TYPE", selfToken));
         classTable.add("IO", makeClassBinding(cd));
         // Str
         cd = new ClassDescriptor("Str");
@@ -103,15 +103,15 @@ public class TableManager
         cd.addMethod(makeMethodBinding(md, null, "Str"));
         md = new MethodDescriptor("substr", "Str", "Int", "Int");
         cd.addMethod(makeMethodBinding(md, null, "Str"));
-        cd.addVariable(makeObjectBinding("self", "SELF_TYPE", selfToken));
+//        cd.addVariable(makeObjectBinding("this", "SELF_TYPE", selfToken));
         classTable.add("Str",  makeClassBinding(cd));
         // Int
         cd = new ClassDescriptor("Int");
-        cd.addVariable(makeObjectBinding("self", "SELF_TYPE", selfToken));
+//        cd.addVariable(makeObjectBinding("this", "SELF_TYPE", selfToken));
         classTable.add("Int", makeClassBinding(cd));
         // Bool
         cd = new ClassDescriptor("Bool");
-        cd.addVariable(makeObjectBinding("self", "SELF_TYPE", selfToken));
+//        cd.addVariable(makeObjectBinding("this", "SELF_TYPE", selfToken));
         classTable.add("Bool", makeClassBinding(cd));
         // SELF_TYPE
         classTable.add("SELF_TYPE", makeClassBinding(new ClassDescriptor("SELF_TYPE")));

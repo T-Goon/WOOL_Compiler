@@ -178,7 +178,7 @@ public class MethodDescriptor
             if (other.returnType != null) {
                 return false;
             }
-        } else if (!returnType.equals(other.returnType)) {
+        } else if (!returnType.equals(other.returnType) && !other.returnType.equals("SELF_TYPE")) {
             return false;
         }
         return true;

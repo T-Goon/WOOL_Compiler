@@ -49,7 +49,8 @@ class SymbolTableCheckerTest {
 		"/methVarRef.wl", // Test referencing variables in a method
 		"/objMethExpr.wl", // Test referencing methods with . operator
 		"/locMethRef.wl", // Test that using local method references is correct
-		"/objInstance.wl"// Create instance of object correctly
+		"/objInstance.wl",// Create instance of object correctly
+		"/copy.wl"
 		})
 	void posTests(String file) throws IOException {
 		ParseTree tree;
@@ -83,7 +84,8 @@ class SymbolTableCheckerTest {
 		"/intInstance.wl", // Error on instance of Int object
 		"/boolInstance.wl", // Error on instance of Bool object
 		"/varDefBadType.wl", // Variable def with non-existant type
-		"/this2.wl" // Error on assign to this
+		"/this2.wl", // Error on assign to this
+		"/selfBad.wl"
 	})
 	void negTests(String file) throws IOException {
 		ParseTree tree;
