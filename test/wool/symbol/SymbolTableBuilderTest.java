@@ -158,7 +158,7 @@ class SymbolTableBuilderTest {
 		"/classVarRedef.wl", // Test that redefining a class variable results in error
 		"/classMethRedef.wl", // Test that redefining a class method results in error
 		"/formRedef.wl", // Formal id redef
-		"/thisArg.wl"
+		"/thisArg.wl", // Error on formal named this
 		})
 	public void negTest(String file) throws IOException{
 		ParseTree tree;

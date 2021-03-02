@@ -51,7 +51,8 @@ class SymbolTableCheckerTest {
 		"/locMethRef.wl", // Test that using local method references is correct
 		"/objInstance.wl",// Create instance of object correctly
 		"/copy.wl", // Check the overriding of SELF_TYPE methods
-		"/ref.wl"
+		"/ref.wl",
+		"/methClassVarRedef.wl" // check referenced class vars in methods before they are redefed in method
 		})
 	void posTests(String file) throws IOException {
 		ParseTree tree;
@@ -87,7 +88,8 @@ class SymbolTableCheckerTest {
 		"/varDefBadType.wl", // Variable def with non-existant type
 		"/this2.wl", // Error on assign to this
 		"/selfBad.wl",
-		"/ref.wl"
+		"/ref.wl",
+		"/badForm.wl"
 	})
 	void negTests(String file) throws IOException {
 		ParseTree tree;

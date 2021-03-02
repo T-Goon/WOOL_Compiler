@@ -62,7 +62,10 @@ class TypeCheckerTest {
 		"/objMeth.wl", // use method calls correctly
 		"/thisRef.wl", // reference this correctly
 		"/methType.wl", // meth ret and expr type correct
-		"/selfType.wl" // self_type is computed correctly
+		"/selfType.wl", // self_type is computed correctly
+		"/formRef.wl", // Formal is reference correctly
+		"/whileUse.wl",
+		"/selfType2.wl"
 		})
 	void posTests(String file) throws IOException {
 		ParseTree tree;
@@ -103,7 +106,8 @@ class TypeCheckerTest {
 		"/objMethExprBad.wl", // Test ref method name that does not exist
 		"/objMethExprBad2.wl", // Test using method with wrong number of args
 		"/methTypeBad.wl", // meth expr and ret type don't match
-		"/badObjMeth.wl" // error on calling method from primitive
+		"/badObjMeth.wl", // error on calling method from primitive
+		"/null.wl"
 	})
 	void negTests(String file) throws IOException {
 		ParseTree tree;
