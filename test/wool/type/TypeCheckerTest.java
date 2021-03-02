@@ -102,7 +102,8 @@ class TypeCheckerTest {
 		"/locMethRefBad2.wl", // Test local method call with bad number of args
 		"/objMethExprBad.wl", // Test ref method name that does not exist
 		"/objMethExprBad2.wl", // Test using method with wrong number of args
-		"/methTypeBad.wl" // meth expr and ret type don't match
+		"/methTypeBad.wl", // meth expr and ret type don't match
+		"/badObjMeth.wl" // error on calling method from primitive
 	})
 	void negTests(String file) throws IOException {
 		ParseTree tree;

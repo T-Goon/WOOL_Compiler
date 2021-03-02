@@ -170,6 +170,13 @@ public class SymbolTableBuilder extends WoolBaseVisitor<Void> {
 			type = "Bool";
 		}
 		
+		if(name.equals("this")) {
+			throw new WoolException(
+					"Line "+ctx.getStart().getLine()+
+					", Class "+currentClass+
+					", Cannont create variable named \"this\"");
+		}
+		
 		ObjectBinding form = tm.newVariable(name, type, ctx.getStart());
 		MethodDescriptor md = tm.currentMethodBinding.getMethodDescriptor();
 		md.addVariable(form);

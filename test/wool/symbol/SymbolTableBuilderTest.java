@@ -32,6 +32,7 @@ class SymbolTableBuilderTest {
 	private static ParseTree mvTree;
 	
 	private String negFilesLoc = "test-files/symbolTableTestFiles/negTestFiles";
+	private String posFilesLoc = "test-files/symbolTableTestFiles/posTestFiles";
 	
 	@BeforeAll
 	static void makeTrees() throws IOException {
@@ -135,13 +136,29 @@ class SymbolTableBuilderTest {
 	
 	@ParameterizedTest
 	@CsvSource({
+		"/thisMeth.wl" // No error on create method named this
+		})
+	public void posTest(String file) throws IOException{
+		ParseTree tree;
+		
+		WoolRunnerImpl imp = WoolFactory.makeParserRunner(
+				CharStreams.fromFileName(posFilesLoc+file));
+		tree = imp.parse();
+		tree.accept(stb);
+
+        assertTrue(true);
+	}
+	
+	@ParameterizedTest
+	@CsvSource({
 		"/this.wl", // Error on create variable named this
 		"/methVarRedef.wl", // Error on redef of var in meth
 		"/classRedef.wl", // Test that redefining a class results in error
 		"/strRedef.wl", // Test that redefining a Str
 		"/classVarRedef.wl", // Test that redefining a class variable results in error
 		"/classMethRedef.wl", // Test that redefining a class method results in error
-		"/formRedef.wl" // Formal id redef
+		"/formRedef.wl", // Formal id redef
+		"/thisArg.wl"
 		})
 	public void negTest(String file) throws IOException{
 		ParseTree tree;
