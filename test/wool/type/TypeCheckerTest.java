@@ -65,7 +65,10 @@ class TypeCheckerTest {
 		"/selfType.wl", // self_type is computed correctly
 		"/formRef.wl", // Formal is reference correctly
 		"/whileUse.wl",
-		"/selfType2.wl"
+		"/selfType2.wl",
+		"/if2.wl", // Primitives in expressions calculate if statement type correctly
+		"/inheritedMethodCall.wl", // Calculates method return types for selftype correctly
+		"/linkedList.wl"
 		})
 	void posTests(String file) throws IOException {
 		ParseTree tree;

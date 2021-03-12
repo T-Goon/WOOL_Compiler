@@ -52,7 +52,8 @@ class SymbolTableCheckerTest {
 		"/objInstance.wl",// Create instance of object correctly
 		"/copy.wl", // Check the overriding of SELF_TYPE methods
 		"/ref.wl",
-		"/methClassVarRedef.wl" // check referenced class vars in methods before they are redefed in method
+		"/methClassVarRedef.wl", // check referenced class vars in methods before they are redefed in method
+		"/forwardAttributeReference1.wl"
 		})
 	void posTests(String file) throws IOException {
 		ParseTree tree;
@@ -74,9 +75,7 @@ class SymbolTableCheckerTest {
 		"/inhrtBad3.wl", // Test inherited classes have a cycle
 		"/inhrtBad4.wl", // Test inherited classes have a cycle
 		"/inhrtVarBad.wl", // Test error on redefined inherited variables
-		"/classVarInitBad.wl", // Test error on class variable use before definition
 		"/outsideRef.wl", // Test error on class variable use outside class
-		"/assignExprRefBad.wl", // Test error on class variable use before definition from assign expression.
 		"/methRedefBad.wl", // Test error on bad inherited method redefinition
 		"/methVarRefBad.wl", // Test error on bad var ref in method
 		"/objInstanceBad.wl", //Create instance of class that doesn't exist

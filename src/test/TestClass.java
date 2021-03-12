@@ -14,6 +14,10 @@ package test;
 /**
  * Description
  */
-public class TestClass extends wool.Object
+public class TestClass extends A
 {
+	
+	
 }
+
+class A{}
