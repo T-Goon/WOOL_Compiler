@@ -11,13 +11,15 @@
  *******************************************************************************/
 package test;
 
+import wool.Str;
+
 /**
  * Description
  */
 public class TestClass extends A
 {
-	
-	
+	wool.Object w = new wool.Object();
 }
 
-class A{}
+class A{
+}

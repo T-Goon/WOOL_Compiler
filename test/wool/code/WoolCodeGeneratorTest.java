@@ -39,11 +39,13 @@ class WoolCodeGeneratorTest {
 		
 	}
 
-//	@ParameterizedTest
+	@ParameterizedTest
 	@CsvSource({
 		"/emptyClass.wl",
 		"/manyEmptyCls.wl",
 		"/SimpleInhrt.wl",
+		"/uninitClassVars.wl",
+		"/simpleInitClassVarsTest.wl",
 	})
 	public void genClasses(String file) throws IOException {
 		TableManager.reset();
@@ -59,7 +61,7 @@ class WoolCodeGeneratorTest {
 		tree.accept(stb);
 		ParseTreeProperty<AbstractBinding> bindings = stc.visit(tree);
 		tc = new TypeChecker(bindings);
-		tc.visit(tree);
+		bindings = tc.visit(tree);
 		
 		CodeGenerator cg = new CodeGenerator(bindings);
 		ArrayList<Object[]> b = cg.visit(tree);
@@ -96,6 +98,11 @@ class WoolCodeGeneratorTest {
 		// Inheritance off of an empty class
 		new SimpleInhrtTest();
 
+		// Test uninitialized variables of all types
+		new UninitClassVarsTest();
+		
+		// Test initializing variables with constants
+		new SimpleInitClassVarsTest();
 
 		assertTrue(true);
 
