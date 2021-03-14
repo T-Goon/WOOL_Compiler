@@ -16,9 +16,9 @@ public class SimpleInitClassVarsTest extends G{
 	     */
 	    public void run()
 	    {
-	    	System.out.println(a); // int, should be 0
-	    	System.out.println(b); // bool, should be 0
-	    	System.out.println("\""+c+"\""); // string, should be ""
-	    	System.out.println(d); // wool object. should be null
+	    	System.out.println("a is 100: "+(a==100));
+	    	System.out.println("b is true: "+b);
+	    	System.out.println("c is \"This is a string\": "+ c.toString().equals("This is a string"));
+	    	System.out.println("d is class H: "+(d instanceof H));
 	    }
 }

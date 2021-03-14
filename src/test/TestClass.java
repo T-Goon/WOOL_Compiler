@@ -16,10 +16,16 @@ import wool.Str;
 /**
  * Description
  */
-public class TestClass extends A
+public class TestClass
 {
-	wool.Object w = new wool.Object();
+	int h = 500;
+
+	
+	
 }
 
 class A{
+	public A() {
+		
+	}
 }

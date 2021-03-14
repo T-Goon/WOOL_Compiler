@@ -69,12 +69,6 @@ class WoolParserTest extends WoolTestRunner
         assertNotNull(tree);
     }
     
-//    @Test
-//    void test() throws IOException {
-//    	doParse(CharStreams.fromFileName("test-files/symbolTableTestFiles/classVar.wl"));
-//        assertNotNull(tree);
-//    }
-//    
     @ParameterizedTest
     @ValueSource( strings = {
             "empty.wl",

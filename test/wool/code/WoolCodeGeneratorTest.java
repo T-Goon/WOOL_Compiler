@@ -41,11 +41,13 @@ class WoolCodeGeneratorTest {
 
 	@ParameterizedTest
 	@CsvSource({
-		"/emptyClass.wl",
-		"/manyEmptyCls.wl",
-		"/SimpleInhrt.wl",
-		"/uninitClassVars.wl",
-		"/simpleInitClassVarsTest.wl",
+		"/emptyClass.wl", // Single empty class
+		"/manyEmptyCls.wl", // many empty classes
+		"/SimpleInhrt.wl", // Empty classes with inheritance
+		"/uninitClassVars.wl", // Uninitialized class variables
+		"/simpleInitClassVarsTest.wl", // Class variables initialized with constants
+		"/nonMethExprTest.wl", // Expressions done at class scope, no method calls
+		"/methodDef.wl", // Method definitions and usage
 	})
 	public void genClasses(String file) throws IOException {
 		TableManager.reset();
@@ -100,9 +102,17 @@ class WoolCodeGeneratorTest {
 
 		// Test uninitialized variables of all types
 		new UninitClassVarsTest();
+		System.out.println();
 		
 		// Test initializing variables with constants
 		new SimpleInitClassVarsTest();
+		System.out.println();
+		
+		// Expressions at class scope level, no methods
+		new NonMethExprTest();
+		System.out.println();
+		
+		new MethodDefTest();
 
 		assertTrue(true);
 

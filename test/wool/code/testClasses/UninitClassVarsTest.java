@@ -16,9 +16,9 @@ public class UninitClassVarsTest extends F{
 	     */
 	    public void run()
 	    {
-	    	System.out.println(a); // int, should be 0
-	    	System.out.println(b); // bool, should be 0
-	    	System.out.println("\""+c+"\""); // string, should be ""
-	    	System.out.println(d); // wool object. should be null
+	    	System.out.println("a is 0: "+ (a == 0));
+	    	System.out.println("b is false: "+(b == false));
+	    	System.out.println("c is "+"\""+c+"\": "+ c.toString().equals(""));
+	    	System.out.println("d is null: " + (d == null));
 	    }
 }
