@@ -10,10 +10,6 @@ public class MethodDefTest extends K{
 	        run();
 	    }
 
-	    /**
-	     * Description 
-	     * @param args
-	     */
 	    public void run()
 	    {
 	    	// Very basic methods
@@ -36,5 +32,9 @@ public class MethodDefTest extends K{
 	    	// Method gets class variables
 	    	System.out.println("MethodG returns 251: "+(methodG(a) == 251));
 	    	System.out.println("MethodH returns 254: "+(methodH(a) == 254));
+	    	
+	    	// Method and variable inheritance
+	    	System.out.println("MethodI returns 27: "+(methodI(a) == 27));
+	    	System.out.println("MethodL returns 45: "+(methodL() == 45));
 	    }
 }

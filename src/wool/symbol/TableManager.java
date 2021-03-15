@@ -270,6 +270,28 @@ public class TableManager
     }
     
     /**
+     * Search for a method binding for a method, given a starting class. If the binding
+     * is not found in the specified class, then search up the class hierarchy.
+     * @param methodName the method name
+     * @param className the starting class
+     * @return the descriptor for the class the method is defined in if it is found, 
+     * null if there is no such binding
+     */
+    public ClassDescriptor lookupClassForMethod(String methodName, String className)
+    {
+        ClassDescriptor cd = lookupClass(className).getClassDescriptor();
+        MethodBinding mb = cd.getMethodBinding(methodName);
+        if (mb == null) {
+            if(cd.inherits == null) {
+                return null;
+            } else {
+                return lookupClassForMethod(methodName, cd.inherits);
+            }
+        }
+        return cd;
+    }
+    
+    /**
      * Lookup a class in the class table.
      * @param className the class to find
      * @return the class binding or null if the class has not been defined

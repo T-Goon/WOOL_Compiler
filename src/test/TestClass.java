@@ -18,14 +18,37 @@ import wool.Str;
  */
 public class TestClass
 {
-	int h = 500;
+	A a = new A();
+	int h = a(1, 3);
 
-	
+	public int a(int b, int c) {
+		if (b == 1) {
+			return 1;
+		} else if(c == 1){
+			return 2;
+		} else if (b ==3) {
+			return 3;
+		} else {
+			return 4;
+		}
+	}
 	
 }
 
 class A{
 	public A() {
 		
+	}
+	
+	public int a(int b, int c) {
+		if (b == 1) {
+			return 1;
+		} else if(c == 1){
+			return 2;
+		} else if (b ==3) {
+			return 3;
+		} else {
+			return 4;
+		}
 	}
 }

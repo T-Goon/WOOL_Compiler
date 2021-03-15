@@ -48,6 +48,8 @@ class WoolCodeGeneratorTest {
 		"/simpleInitClassVarsTest.wl", // Class variables initialized with constants
 		"/nonMethExprTest.wl", // Expressions done at class scope, no method calls
 		"/methodDef.wl", // Method definitions and usage
+		"/methodDispatch.wl", // Method dispatch
+		"/CondsAndWhile.wl", // Conditional statements and loops
 	})
 	public void genClasses(String file) throws IOException {
 		TableManager.reset();
@@ -112,7 +114,14 @@ class WoolCodeGeneratorTest {
 		new NonMethExprTest();
 		System.out.println();
 		
+		// Method definitions
 		new MethodDefTest();
+		System.out.println();
+		
+		new MethodDispatchTest();
+		System.out.println();
+		
+		new CondsAndWhileTest();
 
 		assertTrue(true);
 

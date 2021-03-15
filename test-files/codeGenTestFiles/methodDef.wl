@@ -1,4 +1,4 @@
-class K{
+class K inherits L{
   r : int <- 500;
 
   methodA() : int{
@@ -39,4 +39,16 @@ class K{
     c : int <- r + b;
     c <- c/2
   }
+
+  methodI(b:int):int{
+    b + a
+  }
+}
+
+class L{
+a: int <- 24;
+
+methodL():int{
+  45
+}
 }
