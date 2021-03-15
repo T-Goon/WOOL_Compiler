@@ -21,6 +21,7 @@ public class CondsAndWhileTest extends O{
 	    	// while statement
 	    	System.out.println("c is 10: "+(c == 10));
 	    	System.out.println("d is Object: "+(d instanceof wool.Object));
+	    	System.out.println("methodA() returns 10: "+(methodA() == 10));
 	    	
 	    	// Equality operators
 	    	System.out.println("e is 6: "+(e == true));
@@ -29,5 +30,12 @@ public class CondsAndWhileTest extends O{
 	    	
 	    	// select statement
 	    	System.out.println("e is \"second\": "+(i.toString().equals("second")));
+	    	System.out.println("n is \"\": "+(n.toString().equals("")));
+	    	System.out.println("o is null: "+(o == null));
+	    	
+	    	// isnull
+	    	System.out.println("j is false: "+(j == false));
+	    	System.out.println("l is true: "+(l == true));
+	    	System.out.println("m is false: "+(m == false));
 	    }
 }

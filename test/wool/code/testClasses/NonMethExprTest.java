@@ -50,5 +50,9 @@ public class NonMethExprTest extends I{
 	    	// logical negation works
 	    	System.out.println("v is false: "+ (v == false)); 
 	    	System.out.println("w is true: "+ (w == true)); 
+	
+	    	// Block expressions work
+	    	System.out.println("x is 5: "+ (x == 5));
+	    	System.out.println("y is 5: "+ (y == 5)); 
 	    }
 }

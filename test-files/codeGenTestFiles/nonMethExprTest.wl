@@ -29,4 +29,7 @@ u : Bool <- 3 >= 4;
 
 v : Bool <- ~(3 > 1 + 1);
 w : Bool <- ~(3 < 1 + 1);
+
+x : int <- 0;
+y : int <- {x<-x+1;x<-x+1;x<-x+1;x<-x+1;x<-x+1; new Object; x;};
 }

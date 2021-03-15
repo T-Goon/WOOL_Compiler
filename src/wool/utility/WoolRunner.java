@@ -12,6 +12,8 @@
 
 package wool.utility;
 
+import java.util.Map;
+
 import org.antlr.v4.runtime.*;
 import wool.lexparse.*;
 
@@ -57,9 +59,9 @@ public interface WoolRunner
 //     */
 //    LinkedList<IRinstruction> makeIR();
 //    
-//    /**
-//     * Compile the source code.
-//     * @return the class file bytecode for each class that can be written.
-//     */
-//    Map<String, byte[]> compile();
+    /**
+     * Compile the source code.
+     * @return the class file bytecode for each class that can be written.
+     */
+    Map<String, byte[]> compile();
 }

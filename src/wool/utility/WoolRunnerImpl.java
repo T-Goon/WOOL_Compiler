@@ -1,10 +1,12 @@
 package wool.utility;
 
+import java.io.FileOutputStream;
 import java.util.*;
 import java.util.function.Supplier;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.ParseTreeProperty;
 
+import wool.code.CodeGenerator;
 import wool.lexparse.*;
 import wool.symbol.AbstractBinding;
 //import wool.symbol.SymbolTableBuilder;
@@ -64,7 +66,6 @@ public class WoolRunnerImpl implements WoolRunner
         
 		ParseTreeProperty<AbstractBinding> bindings = stc.visit(parseTree);
 		TypeChecker tc = new TypeChecker(bindings);
-		parseTree.accept(tc);
 		
         return parseTree;
     }
@@ -97,14 +98,23 @@ public class WoolRunnerImpl implements WoolRunner
 //        return ir;
 //    }
 //    
-//    @Override
-//    public Map<String, byte[]> compile()
-//    {
-//        makeIR();
-//        CoolCodeEmitter emitter = new CoolCodeEmitter();
-//        ast.accept(emitter);
-//        return emitter.getBytecodes();
-//    }
+    @Override
+    public Map<String, byte[]> compile()
+    {
+    	parseTree = parse();
+        SymbolTableBuilder stb = new SymbolTableBuilder();
+        
+        parseTree.accept(stb);
+        SymbolTableChecker stc = new SymbolTableChecker();
+        
+		ParseTreeProperty<AbstractBinding> bindings = stc.visit(parseTree);
+		TypeChecker tc = new TypeChecker(bindings);
+		bindings = tc.visit(parseTree);
+ 
+        CodeGenerator cg = new CodeGenerator(bindings);
+		
+        return cg.visit(parseTree);
+    }
 
     /************************************************************************** 
      * Initializers

@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -50,6 +51,7 @@ class WoolCodeGeneratorTest {
 		"/methodDef.wl", // Method definitions and usage
 		"/methodDispatch.wl", // Method dispatch
 		"/CondsAndWhile.wl", // Conditional statements and loops
+		"/WoolLibTest.wl", // Main method and wool library classes test
 	})
 	public void genClasses(String file) throws IOException {
 		TableManager.reset();
@@ -68,17 +70,24 @@ class WoolCodeGeneratorTest {
 		bindings = tc.visit(tree);
 		
 		CodeGenerator cg = new CodeGenerator(bindings);
-		ArrayList<Object[]> b = cg.visit(tree);
+		HashMap<String, byte[]> b = cg.visit(tree);
 		
 		// Create all class files
-		for(Object[] pair : b) {
-			String name = (String)pair[0];
-			byte[] array = (byte[])pair[1];
-			
-			FileOutputStream fos = new FileOutputStream(outputLoc+"/"+name);
-			fos.write(array);
-			fos.close();
-		}
+//		for(Object[] pair : b) {
+//			String name = (String)pair[0];
+//			byte[] array = (byte[])pair[1];
+//			
+//			FileOutputStream fos = new FileOutputStream(outputLoc+"/"+name);
+//			fos.write(array);
+//			fos.close();
+//		}
+		
+		for (String s : b.keySet()) {
+            String classFilePath =  outputLoc + "/" + s;
+            FileOutputStream fos = new FileOutputStream(classFilePath);
+            fos.write(b.get(s));
+            fos.close();
+        }
 		
         assertTrue(true);
         
@@ -122,6 +131,9 @@ class WoolCodeGeneratorTest {
 		System.out.println();
 		
 		new CondsAndWhileTest();
+		System.out.println();
+		
+		new WoolLibTest();
 
 		assertTrue(true);
 
