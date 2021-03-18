@@ -18,11 +18,14 @@ import wool.Str;
  */
 public class TestClass
 {
-	public static void main(String args[]) {
-		
+	public void b(String args[]) {
+		a();
+		int c = a();
 	}
 
-	
+	public int a(){
+		return 2;
+	}
 }
 
 class A{

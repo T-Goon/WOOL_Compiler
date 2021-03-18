@@ -52,6 +52,7 @@ class WoolCodeGeneratorTest {
 		"/methodDispatch.wl", // Method dispatch
 		"/CondsAndWhile.wl", // Conditional statements and loops
 		"/WoolLibTest.wl", // Main method and wool library classes test
+		"/harnessTest.wl"
 	})
 	public void genClasses(String file) throws IOException {
 		TableManager.reset();
@@ -73,15 +74,6 @@ class WoolCodeGeneratorTest {
 		HashMap<String, byte[]> b = cg.visit(tree);
 		
 		// Create all class files
-//		for(Object[] pair : b) {
-//			String name = (String)pair[0];
-//			byte[] array = (byte[])pair[1];
-//			
-//			FileOutputStream fos = new FileOutputStream(outputLoc+"/"+name);
-//			fos.write(array);
-//			fos.close();
-//		}
-		
 		for (String s : b.keySet()) {
             String classFilePath =  outputLoc + "/" + s;
             FileOutputStream fos = new FileOutputStream(classFilePath);
@@ -134,6 +126,9 @@ class WoolCodeGeneratorTest {
 		System.out.println();
 		
 		new WoolLibTest();
+		System.out.println();
+		
+		new HarnessTest();
 
 		assertTrue(true);
 
