@@ -52,7 +52,8 @@ class WoolCodeGeneratorTest {
 		"/methodDispatch.wl", // Method dispatch
 		"/CondsAndWhile.wl", // Conditional statements and loops
 		"/WoolLibTest.wl", // Main method and wool library classes test
-		"/harnessTest.wl"
+		"/harnessTest.wl",
+		"/subStr.wl"
 	})
 	public void genClasses(String file) throws IOException {
 		TableManager.reset();
@@ -129,6 +130,9 @@ class WoolCodeGeneratorTest {
 		System.out.println();
 		
 		new HarnessTest();
+		System.out.println();
+		
+		new SubStrTest();
 
 		assertTrue(true);
 
