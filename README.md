@@ -30,7 +30,7 @@ In the `wool/compile` package, use Eclipse's export feature to export Woolc.java
 
 ### Running the Programs
 
-`java <fileName>`: Run the program the same as any other java program post-compile.
+`java <fileName>`: Run the program the same as any other Java program post-compile.
 
 ### Dependencies and Other Software
 
