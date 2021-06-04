@@ -53,7 +53,12 @@ class WoolCodeGeneratorTest {
 		"/CondsAndWhile.wl", // Conditional statements and loops
 		"/WoolLibTest.wl", // Main method and wool library classes test
 <<<<<<< HEAD
+<<<<<<< HEAD
 		"/harnessTest.wl"
+=======
+		"/harnessTest.wl",
+		"/subStr.wl"
+>>>>>>> e87302e7fba3adc12df649c369eeedb6f4c7ea7c
 =======
 		"/harnessTest.wl",
 		"/subStr.wl"
@@ -135,6 +140,12 @@ class WoolCodeGeneratorTest {
 		
 		new HarnessTest();
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+		System.out.println();
+		
+		new SubStrTest();
+>>>>>>> e87302e7fba3adc12df649c369eeedb6f4c7ea7c
 =======
 		System.out.println();
 		

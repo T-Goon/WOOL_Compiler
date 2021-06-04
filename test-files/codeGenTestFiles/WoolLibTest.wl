@@ -22,6 +22,10 @@ e.outInt(g);
 e.copy();
 e.outStr(c);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+e.outStr(e.typeName());
+>>>>>>> e87302e7fba3adc12df649c369eeedb6f4c7ea7c
 =======
 e.outStr(e.typeName());
 >>>>>>> e87302e7fba3adc12df649c369eeedb6f4c7ea7c
