@@ -7,6 +7,14 @@ larger(a : int, b : int) : int{
 if a > b then a else b fi
 }
 
+childAndThis(): Object {
+		if true then this else "hello" fi
+	}
+
+methodB(): Q {
+	if true then (new P) else (new Q) fi
+}
+
 c : int <- 0;
 d : Object <- while c < 10 loop {new Object; c<-c+1;} pool;
 
@@ -29,6 +37,7 @@ j : boolean <- isnull i;
 k : O;
 l : boolean <- isnull k;
 m : boolean <- isnull 1;
+p : boolean <- isnull null;
 }
 
 class P inherits Q{}

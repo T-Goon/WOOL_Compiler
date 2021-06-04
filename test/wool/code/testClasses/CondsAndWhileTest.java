@@ -17,10 +17,12 @@ public class CondsAndWhileTest extends O{
 	    	System.out.println("b is \"true\": "+(b.toString().equals("true")));
 	    	
 	    	System.out.println("larger() is 7: "+(larger(6,7) == 7));
+	    	System.out.println("childAndThis() is O: "+(childAndThis() instanceof O));
+	    	System.out.println("childAndThis() is O: "+(methodB() instanceof P));
 	    	
 	    	// while statement
 	    	System.out.println("c is 10: "+(c == 10));
-	    	System.out.println("d is Object: "+(d instanceof wool.Object));
+	    	System.out.println("d is null: "+(d == null));
 	    	System.out.println("methodA() returns 10: "+(methodA() == 10));
 	    	
 	    	// Equality operators
@@ -37,5 +39,6 @@ public class CondsAndWhileTest extends O{
 	    	System.out.println("j is false: "+(j == false));
 	    	System.out.println("l is true: "+(l == true));
 	    	System.out.println("m is false: "+(m == false));
+	    	System.out.println("m is false: "+(p == true));
 	    }
 }
