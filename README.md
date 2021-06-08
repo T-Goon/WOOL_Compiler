@@ -19,6 +19,58 @@ Custom ANTLR visitors were used to walk the parse trees created in syntactic ana
 
 Here another custom ANTLR visitor was used to walk through the parse tree of the now valid WOOL program and ASM was used to generate the Java bytecode intended to perform each WOOL operation.
 
+## Example WOOL Program
+
+
+    class R{
+
+    j : Object <- new Object;
+
+    main():int{
+
+    b : Str <- "hel\tl\\o\n \
+    h";
+    c : Str <- b.concat("a\n\t\nb\n");
+    d : Str <- c.substr(1, 2);
+
+    e : IO <- new IO;
+    g : int <- 9;
+    i : Object <- new Object;
+
+    {
+    e.outStr(c);
+    e.outInt(g);
+    e.copy();
+    e.outStr(c);
+    g <- g + b.length() + c.length() ;
+    }
+    }
+
+    }
+
+    class S{
+    r : R <- new R;
+
+    methodA():int{
+    {
+    r.main();
+    4;
+    }
+    }
+    }
+### Output
+    hel	l\o
+     \
+    ha
+
+    b
+    9hel	l\o
+     \
+    ha
+
+    b
+
+
 ## Usage
 ### Creating Woolc.jar
 
